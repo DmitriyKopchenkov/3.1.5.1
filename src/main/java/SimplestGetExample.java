@@ -67,7 +67,7 @@ public class SimplestGetExample {
         headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
 ///////////////////////////////////////////////////////////////////////////
         ResponseEntity<String> responseEntity = restTemplate.exchange(URL,
                 HttpMethod.GET,
@@ -81,21 +81,23 @@ public class SimplestGetExample {
         List<String> cookies = responseEntity.getHeaders().get("Set-Cookie");
         System.out.println("/////////////////////////////////////////////////////////////////////////////");
         System.out.println(cookies);
-        headers.set("Cookie", cookies.stream().collect(Collectors.joining(";")));
+
         System.out.println("response headers - " + responseHeaders);
         //////////////////////////////////////////////////////
         User user = new User();
+        user.setId(3L);
         user.setName("James");
         user.setLastname("Brown");
         user.setAge((byte)8);
-        HttpEntity<Object> request = new HttpEntity<>(user, headers);
-        ResponseEntity<User> response = restTemplate.exchange(URL,
-                HttpMethod.POST,
-                request,
-                User.class);
+        headers.set("Cookie", cookies.stream().collect(Collectors.joining(";")));
+        System.out.println(headers);
+        requestEntity = new HttpEntity<>(user, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity(URL,
+                requestEntity,
+                String.class);
         HttpStatus statusCode2 = response.getStatusCode();
         System.out.println("status code - " + statusCode2);
-        User userDetails = response.getBody();
+        String userDetails = response.getBody();
         System.out.println("user object - " + userDetails);
         HttpHeaders responseHeaders2 = response.getHeaders();
         System.out.println("response headers - " + responseHeaders2);
