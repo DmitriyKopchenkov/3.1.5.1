@@ -84,14 +84,12 @@ public class SimplestGetExample {
 
         System.out.println("response headers - " + responseHeaders);
         //////////////////////////////////////////////////////
-        User user = new User();
-        user.setId(3L);
-        user.setName("James");
-        user.setLastname("Brown");
-        user.setAge((byte)8);
-        headers.set("Cookie", cookies.stream().collect(Collectors.joining(";")));
-        System.out.println(headers);
+        User user = new User(3L,"James","Brown",(byte)8);
+        headers.set("Cookie", responseHeaders.toString());
+        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+        System.out.println("headers - " + headers);
         requestEntity = new HttpEntity<>(user, headers);
+        System.out.println("requestEntity " + requestEntity);
         ResponseEntity<String> response = restTemplate.postForEntity(URL,
                 requestEntity,
                 String.class);
