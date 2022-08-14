@@ -64,7 +64,8 @@ public class SimplestGetExample {
     }
     private static void useExchangedMethodsOfRestTemplate(){
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+        headers.setAccept(Arrays.asList(new MediaType[] {
+                MediaType.APPLICATION_JSON }));
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
@@ -86,7 +87,8 @@ public class SimplestGetExample {
         //////////////////////////////////////////////////////
         User user = new User(3L,"James","Brown",(byte)8);
         headers.set("Cookie", responseHeaders.toString());
-        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+        headers.setAccept(Arrays.asList(new MediaType[] {
+                MediaType.APPLICATION_JSON }));
         System.out.println("headers - " + headers);
         requestEntity = new HttpEntity<>(user, headers);
         System.out.println("requestEntity " + requestEntity);
